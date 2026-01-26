@@ -1,4 +1,4 @@
-/*
+
 # Intelligent Warehouse Inventory Agents
 
 ## 1. Project Background
