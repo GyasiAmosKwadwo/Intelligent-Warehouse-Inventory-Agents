@@ -1,21 +1,24 @@
-/* =========================================================================
-   Simple Reflex Agent
+/* 
+   Simple Reflex Agent - Warehouse Inventory
    Purpose: Demonstrate a simple reflex agent that reacts to stock levels
    Environment: Warehouse with multiple items
-   ========================================================================= */
+*/
 
-:- consult('../knowledge_base/warehouse_facts.pl').  % Load shared warehouse facts
+:- module(simple_reflex, [start/0, simple_reflex/1]).
+
+% Import the shared warehouse facts module
+:- use_module('../facts/warehouse_facts').
 
 % -----------------------------
 % Simple Reflex Rule
 % -----------------------------
 simple_reflex(Item) :-
-    stock(Item, Quantity),       % Get current stock from warehouse_facts.pl
-    threshold(T),                % Get threshold from warehouse_facts.pl
+    stock(Item, Quantity),       % Get current stock from warehouse_facts
+    threshold(T),                % Get threshold from warehouse_facts
     ( Quantity < T ->            % Compare with threshold
         write('You have insufficient items, kindly reorder '), write(Item), nl
     ; 
-        write('Not to Worry; stock for '), write(Item), write(' is sufficient'), nl
+        write('Not to worry; stock for '), write(Item), write(' is sufficient'), nl
     ).
 
 % -----------------------------
