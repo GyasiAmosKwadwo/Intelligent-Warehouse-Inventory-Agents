@@ -1,11 +1,14 @@
-/* 
-   Utility-Based Agent 
+/*
+   Utility-Based Agent - Warehouse Inventory
    Purpose: Demonstrate a utility-based agent that chooses actions
             based on a utility value
    Environment: Warehouse with multiple items
-   */
+*/
 
-:- consult('../knowledge_base/warehouse_facts.pl').
+:- module(utility_based, [start/0, utility_agent/1, utility/2]).
+
+% Import shared warehouse facts
+:- use_module('../facts/warehouse_facts').
 
 % -----------------------------
 % Utility Calculation
