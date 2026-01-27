@@ -8,7 +8,7 @@
 :- module(utility_based, [start/0, utility_agent/1, utility/2]).
 
 % Import shared warehouse facts
-:- use_module('../facts/warehouse_facts').
+:- use_module('../knowledge_base/warehouse_facts').
 
 % -----------------------------
 % Utility Calculation

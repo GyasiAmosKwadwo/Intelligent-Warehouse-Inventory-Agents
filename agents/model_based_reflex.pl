@@ -7,7 +7,7 @@
 :- module(model_based_reflex, [start/0, model_reflex/1]).
 
 % Import the shared warehouse facts module
-:- use_module('../facts/warehouse_facts').
+:- use_module('../knowledge_base/warehouse_facts').
 :- dynamic observed/2.  % Keeps memory of last observed stock
 
 % -----------------------------

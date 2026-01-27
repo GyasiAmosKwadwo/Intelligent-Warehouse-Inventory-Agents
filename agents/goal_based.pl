@@ -7,7 +7,7 @@
 :- module(goal_based, [start/0, goal_based/1]).
 
 % Import shared warehouse facts
-:- use_module('../facts/warehouse_facts').
+:- use_module('../knowledge_base/warehouse_facts').
 
 % -----------------------------
 % Goal-Based Agent Rule
