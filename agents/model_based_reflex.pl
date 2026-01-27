@@ -1,18 +1,21 @@
 /* 
-   Model-Based Reflex Agent
+   Model-Based Reflex Agent - Warehouse Inventory
    Purpose: Demonstrate a model-based reflex agent with memory
    Environment: Warehouse with multiple items
-    */
+*/
 
-:- consult('../knowledge_base/warehouse_facts.pl').  % Load stock, threshold, past_stock
+:- module(model_based_reflex, [start/0, model_reflex/1]).
+
+% Import the shared warehouse facts module
+:- use_module('../facts/warehouse_facts').
 :- dynamic observed/2.  % Keeps memory of last observed stock
 
 % -----------------------------
 % Model-Based Reflex Rule
 % -----------------------------
 model_reflex(Item) :-
-    stock(Item, Quantity),  % Current stock from warehouse_facts.pl
-    threshold(T),           % Threshold from warehouse_facts.pl
+    stock(Item, Quantity),  % Current stock from warehouse_facts
+    threshold(T),           % Threshold from warehouse_facts
     % Check if we observed this item before
     ( observed(Item, LastQuantity) ->
         ( Quantity < LastQuantity ->
