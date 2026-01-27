@@ -26,37 +26,40 @@ menu :-
 % -----------------------------
 % Menu Controller
 % -----------------------------
-run :-
-    repeat,
+run :- run_loop.
+
+run_loop :-
     menu,
     read_line_to_string(user_input, Line),
-    string_codes(Line, [Code|_]),
-    atom_codes(Choice, [Code]),
-    handle_choice(Choice),
-    Choice = '0', !.
-run.
+    (string_codes(Line, [Code|_]) ->
+        atom_codes(Choice, [Code]),
+        (Choice = '0' ->
+            write('Exiting test runner. Goodbye!'), nl
+        ;
+            process_choice(Choice),
+            run_loop
+        )
+    ;
+        write('Please enter a valid option.'), nl,
+        run_loop
+    ).
 
-% -----------------------------
-% Choice Handler
-% -----------------------------
-handle_choice('1') :-
+% Process valid menu choices
+process_choice('1') :-
     write('--- Running Simple Reflex Agent ---'), nl,
     simple_reflex:start, nl.
 
-handle_choice('2') :-
+process_choice('2') :-
     write('--- Running Model-Based Reflex Agent ---'), nl,
     model_based_reflex:start, nl.
 
-handle_choice('3') :-
+process_choice('3') :-
     write('--- Running Goal-Based Agent ---'), nl,
     goal_based:start, nl.
 
-handle_choice('4') :-
+process_choice('4') :-
     write('--- Running Utility-Based Agent ---'), nl,
     utility_based:start, nl.
 
-handle_choice('0') :-
-    write('Exiting test runner. Goodbye!'), nl.
-
-handle_choice(_) :-
+process_choice(_) :-
     write('Invalid option. Please try again.'), nl.
