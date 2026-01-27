@@ -1,49 +1,38 @@
-/* =========================================================================
-   Model-Based Reflex Agent - Warehouse Inventory (Group 15)
-   Author: Zenith Coders
+/* 
+   Model-Based Reflex Agent
    Purpose: Demonstrate a model-based reflex agent with memory
    Environment: Warehouse with multiple items
-   Logic:
-     1. Observe current stock for an item
-     2. Compare with threshold (10 units)
-     3. Update internal state (memory) of last observed stock
-     4. Decide whether to reorder
-     5. Report if stock has changed since last check
-   =========================================================================
     */
 
-:- dynamic stock/2.
-:- dynamic observed/2.
-
-% -----------------------------
-% Initial Stock Levels
-% -----------------------------
-stock(apple, 15).
-stock(banana, 8).
-stock(mango, 5).
+:- consult('../knowledge_base/warehouse_facts.pl').  % Load stock, threshold, past_stock
+:- dynamic observed/2.  % Keeps memory of last observed stock
 
 % -----------------------------
 % Model-Based Reflex Rule
 % -----------------------------
 model_reflex(Item) :-
-    stock(Item, Quantity),
-    Threshold = 10,
+    stock(Item, Quantity),  % Current stock from warehouse_facts.pl
+    threshold(T),           % Threshold from warehouse_facts.pl
+    % Check if we observed this item before
     ( observed(Item, LastQuantity) ->
         ( Quantity < LastQuantity ->
-            write('Attention! Stock for '), write(Item), write(' has decreased from '),
-            write(LastQuantity), write(' to '), write(Quantity), nl
+            write('Attention! Stock for '), write(Item),
+            write(' has decreased from '), write(LastQuantity),
+            write(' to '), write(Quantity), nl
         ;
             true
         )
     ;
         true
     ),
-    ( Quantity < Threshold ->
+    % Decide whether to reorder
+    ( Quantity < T ->
         write('You have insufficient items, kindly reorder '), write(Item), nl
-    ; 
+    ;
         write('Not to worry; stock for '), write(Item), write(' is sufficient'), nl
     ),
-    retractall(observed(Item, _)),  % Update memory
+    % Update memory
+    retractall(observed(Item, _)),
     assert(observed(Item, Quantity)).
 
 % -----------------------------
@@ -54,4 +43,5 @@ start :-
     model_reflex(apple),
     model_reflex(banana),
     model_reflex(mango),
+    model_reflex(orange),
     write('===== End of Demo ====='), nl.
