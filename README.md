@@ -1,4 +1,3 @@
-/*
 # Intelligent Warehouse Inventory Agents
 
 ## 1. Project Background
@@ -88,4 +87,3 @@ This demonstrates how the agent works in real-time.
 
 **Conclusion**
 > "Each agent type demonstrates increasing intelligence — from reactive to goal-directed to utility-based decision-making."
-*/
